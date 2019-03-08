@@ -43,12 +43,9 @@ database.ref(userName).on("child_added", function (snapshot) {
     row.append($("<th>").text(sv.author);
     row.append($("<th>").text(sv.genre);
     row.append($("<th>").text(sv.title);
-    row.append($("<th>").text(monthsWorked));
-    row.append($("<th>").text(snapshot.val().rate));
-    row.append($("<th>").text(monthsWorked * parseInt(snapshot.val().rate)));
+    row.append($("<th>").text("..."));
+    row.append($("<th>").text("..."));
+    row.append($("<th>").text("..."));
 
-    $("#employee-data").append(row);
-    console.log(sv.author);
-    console.log(sv.genre);
-    console.log(sv.title);
+    $("#user-data").append(row);
 });
