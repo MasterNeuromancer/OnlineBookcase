@@ -4,19 +4,19 @@ var bookISBN = "0451524934";
 
 var queryURL = apiGoogle + bookISBN;
 
-// $.ajax({
-//     url: queryURL,
-//     method: "GET"
-// }).then(function (response) {
-//     console.log(response);
-//     console.log(response.items[0].volumeInfo.authors[0]);
-//     console.log(response.items[0].volumeInfo.title);
-//     console.log(response.items[0].volumeInfo.categories[0]);
-//     console.log(response.items[0].volumeInfo.pageCount);
-//     console.log(response.items[0].volumeInfo.publishedDate);
-// });
+$.ajax({
+    url: queryURL,
+    method: "GET"
+}).then(function (response) {
+    console.log(response);
+    console.log(response.items[0].volumeInfo.authors[0]);
+    console.log(response.items[0].volumeInfo.title);
+    console.log(response.items[0].volumeInfo.categories[0]);
+    console.log(response.items[0].volumeInfo.pageCount);
+    console.log(response.items[0].volumeInfo.publishedDate);
+});
 
-// Initialize Firebase
+Initialize Firebase
 var config = {
     apiKey: "AIzaSyDWe0UI_fJcDGtzqvfFuvHPkbAZddTW9cI",
     authDomain: "project1-36185.firebaseapp.com",
@@ -38,6 +38,16 @@ database.ref(userName).on("child_added", function (snapshot) {
     var sv = snapshot.val();
 
     // Console.loging the last user's data
+
+    var row = $("<tr>");
+    row.append($("<th>").text(sv.author);
+    row.append($("<th>").text(sv.genre);
+    row.append($("<th>").text(sv.title);
+    row.append($("<th>").text(monthsWorked));
+    row.append($("<th>").text(snapshot.val().rate));
+    row.append($("<th>").text(monthsWorked * parseInt(snapshot.val().rate)));
+
+    $("#employee-data").append(row);
     console.log(sv.author);
     console.log(sv.genre);
     console.log(sv.title);
