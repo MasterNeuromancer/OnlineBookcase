@@ -54,14 +54,6 @@ database.ref(userName).on("child_added", function (snapshot) {
     $("#table-data").append(row);
 });
 
-
-
-
-
-
-=======
-
-
 //dynamsoft setup stuff. Don't touch!
 dynamsoft = self.dynamsoft || {};
 dynamsoft.dbrEnv = dynamsoft.dbrEnv || {};
