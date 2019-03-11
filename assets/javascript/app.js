@@ -13,36 +13,38 @@ firebase.initializeApp(config);
 var database = firebase.database();
 var ISBNArray = [0];
 
+
+
 /*    Function Takes ISBN, Makes AJAX Call To API, Pushes To Firebase    */
-function ISBN_to_firebase(ISBN){
+function ISBN_to_firebase(ISBN) {
     if (ISBNArray.includes(ISBN)) {
         return;
     }
     ISBNArray.push(ISBN);
-	var PATH = "https://www.googleapis.com/books/v1/volumes?q=isbn:";
-	var queryURL = PATH + ISBN;
-	$.ajax({
-    	url: queryURL,
-    	method: "GET"
-	}).then(function (r) {
-    	console.log(r);
-   		console.log(r.items[0].volumeInfo.authors[0]);
-   		console.log(r.items[0].volumeInfo.title);
-   		console.log(r.items[0].volumeInfo.categories[0]);
-   		console.log(r.items[0].volumeInfo.pageCount);
+    var PATH = "https://www.googleapis.com/books/v1/volumes?q=isbn:";
+    var queryURL = PATH + ISBN;
+    $.ajax({
+        url: queryURL,
+        method: "GET"
+    }).then(function (r) {
+        console.log(r);
+        console.log(r.items[0].volumeInfo.authors[0]);
+        console.log(r.items[0].volumeInfo.title);
+        console.log(r.items[0].volumeInfo.categories[0]);
+        console.log(r.items[0].volumeInfo.pageCount);
         console.log(r.items[0].volumeInfo.publishedDate);
         console.log(r.items[0].volumeInfo.description);
 
-		database.ref(userName).push({
-			author: r.items[0].volumeInfo.authors[0],
-			title: r.items[0].volumeInfo.title,
-			genre: r.items[0].volumeInfo.categories[0],	
-			pages: r.items[0].volumeInfo.pageCount,
+        database.ref(userName).push({
+            author: r.items[0].volumeInfo.authors[0],
+            title: r.items[0].volumeInfo.title,
+            genre: r.items[0].volumeInfo.categories[0],
+            pages: r.items[0].volumeInfo.pageCount,
             date: r.items[0].volumeInfo.publishedDate,
             ISBN: ISBN,
             snippet: r.items[0].volumeInfo.description
-		});
-	});
+        });
+    });
 }
 TestingISBN = "0451524934";
 ISBN_to_firebase(TestingISBN);
@@ -63,23 +65,16 @@ database.ref(userName).on("child_added", function (snapshot) {
 
 
     var row = $("<tr>");
-    row.append($("<th>").text(book.title));
-    row.append($("<th>").text(book.author));
-    row.append($("<th>").text(book.genre));
-    row.append($("<th>").text(book.date));
-    row.append($("<th>").text(book.pages));
-    row.append($("<th>").text(book.ISBN));
-    row.append($("<th>").html(popover));
+    row.append($("<td>").text(book.title));
+    row.append($("<td>").text(book.author));
+    row.append($("<td>").text(book.genre));
+    row.append($("<td>").text(book.date));
+    row.append($("<td>").text(book.pages));
+    row.append($("<td>").text(book.ISBN));
+    row.append($("<td>").html(popover.popover()));
     $("#table-data").append(row);
 });
 
-
-// makes sure popover feature works.
-$(function () {
-    $('.popover').popover({
-      container: 'table-data'
-    })
-  })
 //dynamsoft setup stuff. Don't touch!
 dynamsoft = self.dynamsoft || {};
 dynamsoft.dbrEnv = dynamsoft.dbrEnv || {};
