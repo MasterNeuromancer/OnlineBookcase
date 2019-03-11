@@ -54,11 +54,6 @@ function ISBN_to_firebase(ISBN){
     	method: "GET"
 	}).then(function (r) {
     	console.log(r);
-   		console.log(r.items[0].volumeInfo.authors[0]);
-   		console.log(r.items[0].volumeInfo.title);
-   		console.log(r.items[0].volumeInfo.categories[0]);
-   		console.log(r.items[0].volumeInfo.pageCount);
-		console.log(r.items[0].volumeInfo.publishedDate);
 
 		database.ref(userName).push({
 			author: r.items[0].volumeInfo.authors[0],
