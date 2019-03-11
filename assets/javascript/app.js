@@ -16,7 +16,7 @@ $.ajax({
     console.log(response.items[0].volumeInfo.publishedDate);
 });
 
-Initialize Firebase
+
 var config = {
     apiKey: "AIzaSyDWe0UI_fJcDGtzqvfFuvHPkbAZddTW9cI",
     authDomain: "project1-36185.firebaseapp.com",
@@ -40,15 +40,14 @@ database.ref(userName).on("child_added", function (snapshot) {
     // Console.loging the last user's data
 
     var row = $("<tr>");
-    row.append($("<th>").text(sv.author);
-    row.append($("<th>").text(sv.genre);
-    row.append($("<th>").text(sv.title);
-    row.append($("<th>").text(monthsWorked));
-    row.append($("<th>").text(snapshot.val().rate));
-    row.append($("<th>").text(monthsWorked * parseInt(snapshot.val().rate)));
+    row.append($("<th>").text(sv.author));
+    row.append($("<th>").text(sv.genre));
+    row.append($("<th>").text(sv.title));
 
-    $("#employee-data").append(row);
     console.log(sv.author);
     console.log(sv.genre);
     console.log(sv.title);
+
+    $("#employee-data").append(row);
+
 });
