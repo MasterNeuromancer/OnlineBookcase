@@ -10,6 +10,7 @@ var config = {
 firebase.initializeApp(config);
 var database = firebase.database();
 
+/*    Function Takes ISBN, Makes AJAX Call To API, Pushes To Firebase    */
 function ISBN_to_firebase(ISBN){
 	var PATH = "https://www.googleapis.com/books/v1/volumes?q=isbn:";
 	var queryURL = PATH + ISBN;
@@ -26,8 +27,8 @@ function ISBN_to_firebase(ISBN){
 
 		database.ref(userName).push({
 			author: r.items[0].volumeInfo.authors[0],
-			genre: r.items[0].volumeInfo.title,
-			title: r.items[0].volumeInfo.categories[0],	
+			title: r.items[0].volumeInfo.title,
+			genre: r.items[0].volumeInfo.categories[0],	
 			pages: r.items[0].volumeInfo.pageCount,
 			date: r.items[0].volumeInfo.publishedDate
 
@@ -37,16 +38,22 @@ function ISBN_to_firebase(ISBN){
 TestingISBN = "0451524934";
 ISBN_to_firebase(TestingISBN);
 
-var testing = "testing"
+/*    Update UI From DB    */
 var userName = "matt"
 database.ref(userName).on("child_added", function (snapshot) {
     var book = snapshot.val();
     var row = $("<tr>");
+    row.append($("<th>").text(book.title));
     row.append($("<th>").text(book.author));
     row.append($("<th>").text(book.genre));
-    row.append($("<th>").text(book.title));
     row.append($("<th>").text(book.date));
     row.append($("<th>").text(book.pages));
     row.append($("<th>").text("..."));
-    $("#user-data").append(row);
+    $("#table-data").append(row);
 });
+
+
+
+
+
+
