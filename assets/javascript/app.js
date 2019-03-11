@@ -11,9 +11,14 @@ var config = {
 firebase.initializeApp(config);
 
 var database = firebase.database();
+var ISBNArray = [0];
 
 /*    Function Takes ISBN, Makes AJAX Call To API, Pushes To Firebase    */
 function ISBN_to_firebase(ISBN){
+    if (ISBNArray.includes(ISBN)) {
+        return;
+    }
+    ISBNArray.push(ISBN);
 	var PATH = "https://www.googleapis.com/books/v1/volumes?q=isbn:";
 	var queryURL = PATH + ISBN;
 	$.ajax({
@@ -32,18 +37,18 @@ function ISBN_to_firebase(ISBN){
 			title: r.items[0].volumeInfo.title,
 			genre: r.items[0].volumeInfo.categories[0],	
 			pages: r.items[0].volumeInfo.pageCount,
-			date: r.items[0].volumeInfo.publishedDate
+            date: r.items[0].volumeInfo.publishedDate,
+            ISBN: ISBN
 
 		});
 	});
 }
-TestingISBN = "0451524934";
-ISBN_to_firebase(TestingISBN);
 
 /*    Update UI From DB    */
 var userName = "matt"
 database.ref(userName).on("child_added", function (snapshot) {
     var book = snapshot.val();
+    ISBNArray.push(book.ISBN);
     var row = $("<tr>");
     row.append($("<th>").text(book.title));
     row.append($("<th>").text(book.author));
@@ -87,6 +92,7 @@ var loopReadVideo = function () {
         for (var i = 0; i < results.length; ++i) {
             var result = results[i];
             console.log(result.BarcodeText);
+            ISBN_to_firebase(result.BarcodeText);
         }
         return reader.deleteInstance();
     }).catch(ex => {
