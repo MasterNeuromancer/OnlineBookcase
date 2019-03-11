@@ -1,8 +1,5 @@
-<<<<<<< HEAD
+
 /*    FIREBASE BOILERPLATE    */
-=======
-// Initialize Firebase
->>>>>>> 06081d5b636fae110d0172c245b95f615d48135f
 var config = {
     apiKey: "AIzaSyDWe0UI_fJcDGtzqvfFuvHPkbAZddTW9cI",
     authDomain: "project1-36185.firebaseapp.com",
@@ -12,7 +9,7 @@ var config = {
     messagingSenderId: "112275278683"
 };
 firebase.initializeApp(config);
-<<<<<<< HEAD
+
 var database = firebase.database();
 
 /*    Function Takes ISBN, Makes AJAX Call To API, Pushes To Firebase    */
@@ -72,25 +69,6 @@ dynamsoft.dbrEnv.licenseKey = "t0068NQAAAHxEehhBKsGc6F+dzhfc1x96c1PdDvXS0QvdKSCJ
 //this holds the setInterval for the barcode reading function.
 var isLooping = 0;
 
-
-var apiGoogle = "https://www.googleapis.com/books/v1/volumes?q=isbn:";
-
-var bookISBN = "0451524934";
-
-var queryURL = apiGoogle + bookISBN;
-
-$.ajax({
-    url: queryURL,
-    method: "GET"
-}).then(function (response) {
-    console.log(response);
-    console.log(response.items[0].volumeInfo.authors[0]);
-    console.log(response.items[0].volumeInfo.title);
-    console.log(response.items[0].volumeInfo.categories[0]);
-    console.log(response.items[0].volumeInfo.pageCount);
-    console.log(response.items[0].volumeInfo.publishedDate);
-});
-
 //When the scan barcode button is clicked, this brings up the modal containing the video and asks for webcam persmission and starts barcode scanning
 var videoElement = $("#video")[0];
 $("#scan-barcode").click(function () {
@@ -123,4 +101,4 @@ var loopReadVideo = function () {
         reader.deleteInstance();
     });
 };
->>>>>>> 06081d5b636fae110d0172c245b95f615d48135f
+
