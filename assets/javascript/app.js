@@ -30,7 +30,8 @@ function ISBN_to_firebase(ISBN){
    		console.log(r.items[0].volumeInfo.title);
    		console.log(r.items[0].volumeInfo.categories[0]);
    		console.log(r.items[0].volumeInfo.pageCount);
-		console.log(r.items[0].volumeInfo.publishedDate);
+        console.log(r.items[0].volumeInfo.publishedDate);
+        console.log(r.items[0].volumeInfo.description);
 
 		database.ref(userName).push({
 			author: r.items[0].volumeInfo.authors[0],
@@ -38,27 +39,47 @@ function ISBN_to_firebase(ISBN){
 			genre: r.items[0].volumeInfo.categories[0],	
 			pages: r.items[0].volumeInfo.pageCount,
             date: r.items[0].volumeInfo.publishedDate,
-            ISBN: ISBN
-
+            ISBN: ISBN,
+            snippet: r.items[0].volumeInfo.description
 		});
 	});
 }
+TestingISBN = "0451524934";
+ISBN_to_firebase(TestingISBN);
 
 /*    Update UI From DB    */
 var userName = "matt"
 database.ref(userName).on("child_added", function (snapshot) {
     var book = snapshot.val();
     ISBNArray.push(book.ISBN);
+
+    var popover = $("<button>");
+    popover.attr("data-toggle", "popover");
+    popover.attr("type", "button");
+    popover.attr("class", "btn btn-secondary");
+    popover.attr("data-content", book.snippet);
+    popover.attr("title", book.title);
+    popover.html(book.title);
+
+
     var row = $("<tr>");
     row.append($("<th>").text(book.title));
     row.append($("<th>").text(book.author));
     row.append($("<th>").text(book.genre));
     row.append($("<th>").text(book.date));
     row.append($("<th>").text(book.pages));
-    row.append($("<th>").text("..."));
+    row.append($("<th>").text(book.ISBN));
+    row.append($("<th>").html(popover));
     $("#table-data").append(row);
 });
 
+
+// makes sure popover feature works.
+$(function () {
+    $('.popover').popover({
+      container: 'table-data'
+    })
+  })
 //dynamsoft setup stuff. Don't touch!
 dynamsoft = self.dynamsoft || {};
 dynamsoft.dbrEnv = dynamsoft.dbrEnv || {};
