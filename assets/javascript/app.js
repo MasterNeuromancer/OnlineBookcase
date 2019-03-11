@@ -72,20 +72,6 @@ function ISBN_to_firebase(ISBN){
 	});
 }
 
-/*    Update UI From DB    */
-// database.ref(userName).on("child_added", function (snapshot) {
-//     var book = snapshot.val();
-//     ISBNArray.push(book.ISBN);
-//     var row = $("<tr>");
-//     row.append($("<th>").text(book.title));
-//     row.append($("<th>").text(book.author));
-//     row.append($("<th>").text(book.genre));
-//     row.append($("<th>").text(book.date));
-//     row.append($("<th>").text(book.pages));
-//     row.append($("<th>").text("..."));
-//     $("#table-data").append(row);
-// });
-
 //dynamsoft setup stuff. Don't touch!
 dynamsoft = self.dynamsoft || {};
 dynamsoft.dbrEnv = dynamsoft.dbrEnv || {};
