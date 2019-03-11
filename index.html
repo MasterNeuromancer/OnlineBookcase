@@ -12,44 +12,46 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand navbar-dark bg-dark">
-      <a class="navbar-brand" href="#">USERNAME</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample02" aria-controls="navbarsExample02" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
+  <nav class="navbar navbar-expand navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">USERNAME</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample02"
+      aria-controls="navbarsExample02" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
-      <div class="collapse navbar-collapse" id="navbarsExample02">
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item">
-            <a id="scan-barcode" data-toggle="modal" data-target="#exampleModal" class="nav-link" href="#">SCAN BARCODE<span class="sr-only">(current)</span></a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">TYPE ENTRY</a>
-          </li>
-        </ul>
-        <form class="form-inline my-2 my-md-0">
-          <input class="form-control" type="text" placeholder="maybe use this">
-        </form>
-      </div>
-    </nav>
+    <div class="collapse navbar-collapse" id="navbarsExample02">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a id="scan-barcode" data-toggle="modal" data-target="#exampleModal" class="nav-link" href="#">SCAN
+            BARCODE<span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">TYPE ENTRY</a>
+        </li>
+      </ul>
+      <form class="form-inline my-2 my-md-0">
+        <input class="form-control" type="text" placeholder="maybe use this">
+      </form>
+    </div>
+  </nav>
 
-	<div class="container">
-		<table class="table table-sm">
-        	<thead>
-            	<tr>
-                	<th scope=“col”>Title</th>
-                    <th scope=“col”>Author</th>
-                    <th scope=“col”>Genre</th>
-                    <th scope=“col”>Date Published</th>
-                    <th scope=“col”>Pages</th>
-                    <th scope=“col”>...</th>
-                </tr>
-			</thead>
-			<div id="table-data">
-				
-			</div> 
-		</table>
-	</div>
+  <div class="container">
+    <table class="table table-sm">
+      <thead>
+        <tr>
+          <th scope=“col” >Title</th>
+          <th scope=“col”>Author</th>
+          <th scope=“col”>Genre</th>
+          <th scope=“col”>Date Published</th>
+          <th scope=“col”>Pages</th>
+          <th scope=“col”>...</th>
+        </tr>
+      </thead>
+      <tbody id="table-data">
+
+      </tbody>
+    </table>
+  </div>
 
 
 
@@ -69,7 +71,7 @@
       </div>
     </div>
   </div>
- 
+
   <script src="dbr-6.4.1.3.min.js"></script>
   <script src="https://www.gstatic.com/firebasejs/5.8.6/firebase.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
