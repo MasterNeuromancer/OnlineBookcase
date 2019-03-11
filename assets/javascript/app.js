@@ -15,12 +15,29 @@ var ISBNArray = [0];
 var userName = "default";
 $("#username-modal").modal("show");
 $("#username-submit").click(function (event) {
+    if ($("#username-input").val().trim() === "") {
+        return;
+    }
     event.preventDefault();
     userName = $("#username-input").val().trim();
     $("#username-display").text(userName);
     userName.toLowerCase();
     console.log(userName);
- 
+    $("#table-data").empty();
+    database.ref(userName).on("child_added", function (snapshot) {
+        var book = snapshot.val();
+        ISBNArray.push(book.ISBN);
+        var row = $("<tr>");
+        row.append($("<th>").text(book.title));
+        row.append($("<th>").text(book.author));
+        row.append($("<th>").text(book.genre));
+        row.append($("<th>").text(book.date));
+        row.append($("<th>").text(book.pages));
+        row.append($("<th>").text("..."));
+        $("#table-data").append(row);
+    });
+    $("#username-modal").modal("hide");
+
     
 })
 
@@ -56,18 +73,18 @@ function ISBN_to_firebase(ISBN){
 }
 
 /*    Update UI From DB    */
-database.ref(userName).on("child_added", function (snapshot) {
-    var book = snapshot.val();
-    ISBNArray.push(book.ISBN);
-    var row = $("<tr>");
-    row.append($("<th>").text(book.title));
-    row.append($("<th>").text(book.author));
-    row.append($("<th>").text(book.genre));
-    row.append($("<th>").text(book.date));
-    row.append($("<th>").text(book.pages));
-    row.append($("<th>").text("..."));
-    $("#table-data").append(row);
-});
+// database.ref(userName).on("child_added", function (snapshot) {
+//     var book = snapshot.val();
+//     ISBNArray.push(book.ISBN);
+//     var row = $("<tr>");
+//     row.append($("<th>").text(book.title));
+//     row.append($("<th>").text(book.author));
+//     row.append($("<th>").text(book.genre));
+//     row.append($("<th>").text(book.date));
+//     row.append($("<th>").text(book.pages));
+//     row.append($("<th>").text("..."));
+//     $("#table-data").append(row);
+// });
 
 //dynamsoft setup stuff. Don't touch!
 dynamsoft = self.dynamsoft || {};
