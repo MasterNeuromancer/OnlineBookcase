@@ -12,6 +12,34 @@ firebase.initializeApp(config);
 
 var database = firebase.database();
 var ISBNArray = [0];
+var userName = "default";
+$("#username-modal").modal("show");
+$("#username-submit").click(function (event) {
+    if ($("#username-input").val().trim() === "") {
+        return;
+    }
+    event.preventDefault();
+    userName = $("#username-input").val().trim();
+    $("#username-display").text(userName);
+    userName.toLowerCase();
+    console.log(userName);
+    $("#table-data").empty();
+    database.ref(userName).on("child_added", function (snapshot) {
+        var book = snapshot.val();
+        ISBNArray.push(book.ISBN);
+        var row = $("<tr>");
+        row.append($("<th>").text(book.title));
+        row.append($("<th>").text(book.author));
+        row.append($("<th>").text(book.genre));
+        row.append($("<th>").text(book.date));
+        row.append($("<th>").text(book.pages));
+        row.append($("<th>").text("..."));
+        $("#table-data").append(row);
+    });
+    $("#username-modal").modal("hide");
+
+    
+})
 
 /*    Function Takes ISBN, Makes AJAX Call To API, Pushes To Firebase    */
 function ISBN_to_firebase(ISBN){
@@ -80,6 +108,8 @@ $(function () {
       container: 'table-data'
     })
   })
+
+
 //dynamsoft setup stuff. Don't touch!
 dynamsoft = self.dynamsoft || {};
 dynamsoft.dbrEnv = dynamsoft.dbrEnv || {};
@@ -89,7 +119,8 @@ var isLooping = 0;
 
 //When the scan barcode button is clicked, this brings up the modal containing the video and asks for webcam persmission and starts barcode scanning
 var videoElement = $("#video")[0];
-$("#scan-barcode").click(function () {
+$("#scan-barcode").on("click", function () {
+    console.log("Start Video");
     navigator.mediaDevices.getUserMedia({ video: { width: { ideal: 1280 }, height: { ideal: 720 }, facingMode: { ideal: 'environment' } } }).then(function (stream) {
         videoElement.srcObject = stream;
         videoElement.play();
@@ -120,4 +151,5 @@ var loopReadVideo = function () {
         reader.deleteInstance();
     });
 };
+
 
