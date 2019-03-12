@@ -18,11 +18,11 @@ $("#date-header").click(function(){
 	printTable(userData);
 });
 $("#pages-header").click(function(){
-	sort(userData, "title");
+	sort(userData, "pages");
 	printTable(userData);
 });
 $("#isbn-header").click(function(){
-	sort(userData, "title");
+	sort(userData, "ISBN");
 	printTable(userData);
 });
 $("#snippet-header").click(function(){
