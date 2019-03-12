@@ -13,7 +13,8 @@
 
 <body>
   <nav class="navbar navbar-expand navbar-dark bg-dark">
-    <a id="username-display" data-toggle="modal" data-target="#username-modal" class="navbar-brand" href="#">USERNAME</a>
+    <a id="username-display" data-toggle="modal" data-target="#username-modal" class="navbar-brand"
+      href="#">USERNAME</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample02"
       aria-controls="navbarsExample02" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -26,12 +27,11 @@
             BARCODE<span id="scan-barcode" class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">TYPE ENTRY</a>
+          <a id="type-entry-button" data-toggle="modal" data-target="#typed-entry-modal" class="nav-link" href="#">TYPE
+            ENTRY</a>
         </li>
       </ul>
-      <form class="form-inline my-2 my-md-0">
-        <input class="form-control" type="text" placeholder="maybe use this">
-      </form>
+
     </div>
   </nav>
 
@@ -54,7 +54,31 @@
     </table>
   </div>
 
+  <!-- Typed Entry Modal -->
+  <div class="modal fade" id="typed-entry-modal" tabindex="-1" role="dialog" aria-labelledby="typed-entry-modal-label"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="typed-entry-modal-label">Enter ISBN or Title</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <label for="ISBN-entry">Enter ISBN: </label>
+          <input type="text" id="ISBN-entry" name="ISBN-entry">
+          <button id="ISBN-entry-submit" type="button" class="btn btn-primary">Search</button>
+          <br>
+          <br>
+          <label for="title-entry">Enter Title: </label>
+          <input type="text" id="title-entry" name="title-entry">
+          <button id="title-entry-submit" type="button" class="btn btn-primary">Search</button>
 
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- Video Modal -->
   <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
