@@ -24,20 +24,36 @@ $("#username-submit").click(function (event) {
     userName = userName.toLowerCase();
     $("#table-data").empty();
 
-    database.ref(userName).on("child_added", function (snapshot) {
-        var book = snapshot.val();
-        ISBNArray.push(book.ISBN);
-        userData.push(book);
-        printTable(userData);
-    });
+
+	database.ref(userName).on("child_added", function (snapshot) {
+    var book = snapshot.val();
+		var key = snapshot.key;
+		book.key = key;
+		userData.push(book);
+		ISBNArray.push(book.ISBN);
+		printTable(userData);
+	});
 
     $("#username-input").val("");
     $("#username-modal").modal("hide");
 
-})
-/* 		ISBN_to_firebase can be in a serperate file 	*/
+});
+
+//Remove book by key
+function removeByKey(key){	
+   	database.ref(userName).child(key).remove();
+	for(var i=0; i<userData.length; ++i){
+		if(userData[i].key === key){
+			userData.splice(i, 1);
+			break;
+		}
+	}
+	printTable(userData);
+}
+
 /*    Function Takes ISBN, Makes AJAX Call To API, Pushes To Firebase    */
 function ISBN_to_firebase(ISBN, title = false) {
+
     if (ISBNArray.includes(ISBN)) {
         return;
     }
