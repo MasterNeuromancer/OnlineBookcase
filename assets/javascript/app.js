@@ -24,31 +24,30 @@ $("#username-submit").click(function (event) {
     userName.toLowerCase();
     console.log(userName);
     $("#table-data").empty();
-database.ref(userName).on("child_added", function (snapshot) {
-    var book = snapshot.val();
-    ISBNArray.push(book.ISBN);
+	database.ref(userName).on("child_added", function (snapshot) {
+    	var book = snapshot.val();
+    	ISBNArray.push(book.ISBN);
 
-    var popover = $("<button>");
-    popover.attr("data-toggle", "popover");
-    popover.attr("type", "button");
-    popover.attr("class", "btn btn-secondary");
-    popover.attr("data-content", book.snippet);
-    popover.attr("title", book.title);
-    popover.html(book.title);
+    	var popover = $("<button>");
+    	popover.attr("data-toggle", "popover");
+    	popover.attr("type", "button");
+    	popover.attr("class", "btn btn-secondary");
+    	popover.attr("data-content", book.snippet);
+    	popover.attr("title", book.title);
+    	popover.html(book.title);
 
 
-    var row = $("<tr>");
-    row.append($("<th>").text(book.title));
-    row.append($("<th>").text(book.author));
-    row.append($("<th>").text(book.genre));
-    row.append($("<th>").text(book.date));
-    row.append($("<th>").text(book.pages));
-    row.append($("<th>").text(book.ISBN));
-    row.append($("<th>").html(popover));
-    $("#table-data").append(row);
-});
+    	var row = $("<tr>");
+    	row.append($("<th>").text(book.title));
+    	row.append($("<th>").text(book.author));
+    	row.append($("<th>").text(book.genre));
+    	row.append($("<th>").text(book.date));
+    	row.append($("<th>").text(book.pages));
+    	row.append($("<th>").text(book.ISBN));
+    	row.append($("<th>").html(popover));
+    	$("#table-data").append(row);
+	});
     $("#username-modal").modal("hide");
-
     
 })
 
