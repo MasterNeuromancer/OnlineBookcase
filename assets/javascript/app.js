@@ -1,4 +1,3 @@
-
 /*    FIREBASE BOILERPLATE    */
 var config = {
     apiKey: "AIzaSyDWe0UI_fJcDGtzqvfFuvHPkbAZddTW9cI",
@@ -12,6 +11,7 @@ firebase.initializeApp(config);
 
 var database = firebase.database();
 var ISBNArray = [0];
+var userData = [];
 var userName = "default";
 $("#username-modal").modal("show");
 $("#username-submit").click(function (event) {
@@ -24,11 +24,14 @@ $("#username-submit").click(function (event) {
     userName.toLowerCase();
     console.log(userName);
     $("#table-data").empty();
-    database.ref(userName).on("child_added", function (snapshot) {
-        var book = snapshot.val();
-        ISBNArray.push(book.ISBN);
 
-        var popover = $("<button>");
+	database.ref(userName).on("child_added", function (snapshot) {
+    	var book = snapshot.val();
+    	ISBNArray.push(book.ISBN);
+		  userData.push(book);
+		  printTable(userData);
+    
+        /*var popover = $("<button>");
         popover.attr("data-toggle", "popover");
         popover.attr("type", "button");
         popover.attr("class", "btn btn-secondary");
@@ -37,24 +40,13 @@ $("#username-submit").click(function (event) {
         popover.attr("data-placement", "bottom");
         popover.attr("data-container", "body");
         popover.html("Plot Summary");
-
-
-        var row = $("<tr>");
-        row.append($("<td>").text(book.title));
-        row.append($("<td>").text(book.autdor));
-        row.append($("<td>").text(book.genre));
-        row.append($("<td>").text(book.date));
-        row.append($("<td>").text(book.pages));
-        row.append($("<td>").text(book.ISBN));
-        row.append($("<td>").html(popover.popover()));
-        $("#table-data").append(row);
-    });
+        */
+    	
+	});
     $("#username-modal").modal("hide");
 
-
-
 })
-
+/* 		ISBN_to_firebase can be in a serperate file 	*/
 /*    Function Takes ISBN, Makes AJAX Call To API, Pushes To Firebase    */
 function ISBN_to_firebase(ISBN) {
     if (ISBNArray.includes(ISBN)) {
