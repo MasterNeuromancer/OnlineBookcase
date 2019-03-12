@@ -24,60 +24,54 @@ $("#username-submit").click(function (event) {
     userName.toLowerCase();
     console.log(userName);
     $("#table-data").empty();
+
 	database.ref(userName).on("child_added", function (snapshot) {
     	var book = snapshot.val();
     	ISBNArray.push(book.ISBN);
-		userData.push(book);
-		printTable(userData);
+		  userData.push(book);
+		  printTable(userData);
+    
+        /*var popover = $("<button>");
+        popover.attr("data-toggle", "popover");
+        popover.attr("type", "button");
+        popover.attr("class", "btn btn-secondary");
+        popover.attr("data-content", book.snippet);
+        popover.attr("title", book.title);
+        popover.attr("data-placement", "bottom");
+        popover.attr("data-container", "body");
+        popover.html("Plot Summary");
+        */
     	
 	});
     $("#username-modal").modal("hide");
-    
+
 })
 /* 		ISBN_to_firebase can be in a serperate file 	*/
 /*    Function Takes ISBN, Makes AJAX Call To API, Pushes To Firebase    */
-function ISBN_to_firebase(ISBN){
+function ISBN_to_firebase(ISBN) {
     if (ISBNArray.includes(ISBN)) {
         return;
     }
     ISBNArray.push(ISBN);
-	var PATH = "https://www.googleapis.com/books/v1/volumes?q=isbn:";
-	var queryURL = PATH + ISBN;
-	$.ajax({
-    	url: queryURL,
-    	method: "GET"
-	}).then(function (r) {
-    	console.log(r);
-   		console.log(r.items[0].volumeInfo.authors[0]);
-   		console.log(r.items[0].volumeInfo.title);
-   		console.log(r.items[0].volumeInfo.categories[0]);
-   		console.log(r.items[0].volumeInfo.pageCount);
-        console.log(r.items[0].volumeInfo.publishedDate);
-        console.log(r.items[0].volumeInfo.description);
+    var PATH = "https://www.googleapis.com/books/v1/volumes?q=isbn:";
+    var queryURL = PATH + ISBN;
+    $.ajax({
+        url: queryURL,
+        method: "GET"
+    }).then(function (r) {
+        console.log(r);
 
-		database.ref(userName).push({
-			author: r.items[0].volumeInfo.authors[0],
-			title: r.items[0].volumeInfo.title,
-			genre: r.items[0].volumeInfo.categories[0],	
-			pages: r.items[0].volumeInfo.pageCount,
+        database.ref(userName).push({
+            author: r.items[0].volumeInfo.authors[0],
+            title: r.items[0].volumeInfo.title,
+            genre: r.items[0].volumeInfo.categories[0],
+            pages: r.items[0].volumeInfo.pageCount,
             date: r.items[0].volumeInfo.publishedDate,
             ISBN: ISBN,
             snippet: r.items[0].volumeInfo.description
-		});
-	});
+        });
+    });
 }
-TestingISBN = "0451524934";
-ISBN_to_firebase(TestingISBN);
-
-
-
-
-// makes sure popover feature works.
-$(function () {
-    $('.popover').popover({
-      container: 'table-data'
-    })
-  })
 
 
 //dynamsoft setup stuff. Don't touch!
