@@ -1,4 +1,3 @@
-
 /*    FIREBASE BOILERPLATE    */
 var config = {
     apiKey: "AIzaSyDWe0UI_fJcDGtzqvfFuvHPkbAZddTW9cI",
@@ -28,26 +27,9 @@ $("#username-submit").click(function (event) {
 	database.ref(userName).on("child_added", function (snapshot) {
     	var book = snapshot.val();
     	ISBNArray.push(book.ISBN);
-
-		/*This is the user's data in the browser. This is the master list*/
-		userData.push({
-			author: book.title, 
-			title: book.author,
-			genre: book.genre,
-			date: book.data,
-			pages: book.pages,
-			isbn: book.ISBN
-		
-		});
-		/*This should be a seperate print function and it should read from the client data*/
-    	var row = $("<tr>");
-    	row.append($("<th>").text(book.title));
-    	row.append($("<th>").text(book.author));
-    	row.append($("<th>").text(book.genre));
-    	row.append($("<th>").text(book.date));
-    	row.append($("<th>").text(book.pages));
-    	row.append($("<th>").text(book.ISBN));
-    	$("#table-data").append(row);
+		userData.push(book);
+		printTable(userData);
+    	
 	});
     $("#username-modal").modal("hide");
     
