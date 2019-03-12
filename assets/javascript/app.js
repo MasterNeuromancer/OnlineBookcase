@@ -69,12 +69,12 @@ function ISBN_to_firebase(ISBN) {
     }).then(function (r) {
         console.log(r);
         if ("items" in r) {
-            var authorToLog = "No Author Listed";
-            var genreToLog = "No Genre Listed";
-            var pageCountToLog = "Pages Not Listed";
-            var publishedDateToLog = "Date Not Listed";
-            var snippetToLog = "Description Not Listed";
-            var titleToLog = "Title Not Listed";
+            var authorToLog = "'No Author Listed'";
+            var genreToLog = "'No Genre Listed'";
+            var pageCountToLog = "'Pages Not Listed'";
+            var publishedDateToLog = "'Date Not Listed'";
+            var snippetToLog = "'Description Not Listed'";
+            var titleToLog = "'Title Not Listed'";
 
             if ("authors" in r.items[0].volumeInfo) {
                 authorToLog = r.items[0].volumeInfo.authors[0];
