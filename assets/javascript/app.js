@@ -48,10 +48,6 @@ $("#username-submit").click(function (event) {
         row.append($("<td>").text(book.ISBN));
         row.append($("<td>").html(popover.popover()));
         $("#table-data").append(row);
-        $(function () {
-            $('.popover').popover({
-            })
-        })
     });
     $("#username-modal").modal("hide");
 
