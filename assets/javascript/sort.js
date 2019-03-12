@@ -59,15 +59,15 @@ function printTable(array){
         popover.attr("title", array[i].title);
         popover.attr("data-placement", "left");
         popover.attr("data-container", "body");
-		popover.html("<i>").attr("class", "fas fa-book-open");
+	popover.html("<i>").attr("class", "fas fa-book-open");
 
     	row.append($("<td>").text(array[i].title));
     	row.append($("<td>").text(array[i].author));
     	row.append($("<td>").text(array[i].genre));
     	row.append($("<td>").text(array[i].date));
     	row.append($("<td>").text(array[i].pages));
-		row.append($("<td>").text(array[i].ISBN));
-		row.append($("<td class='text-center'>").html(popover.popover()));
+	row.append($("<td>").text(array[i].ISBN));
+	row.append($("<td class='text-center'>").html(popover.popover()));
     	$("#table-data").append(row);
 	}
 }
