@@ -21,12 +21,12 @@ $("#username-submit").click(function (event) {
     event.preventDefault();
     userName = $("#username-input").val().trim();
     $("#username-display").text(userName);
-    userName.toLowerCase();
-    console.log(userName);
+    userName = userName.toLowerCase();
     $("#table-data").empty();
 
+
 	database.ref(userName).on("child_added", function (snapshot) {
-    	var book = snapshot.val();
+    var book = snapshot.val();
 		var key = snapshot.key;
 		book.key = key;
 		userData.push(book);
@@ -34,11 +34,7 @@ $("#username-submit").click(function (event) {
 		printTable(userData);
 	});
 
-	//this doesn't do anything, this listener code can be remobed.
-	database.ref(userName).on("child_removed", function (snapshot){
-		console.log("removed a child!");
-	});
-   
+    $("#username-input").val("");
     $("#username-modal").modal("hide");
 
 });
@@ -55,13 +51,17 @@ function removeByKey(key){
 	printTable(userData);
 }
 
-// Function Takes ISBN, Makes AJAX Call To API, Pushes To Firebase   
-function ISBN_to_firebase(ISBN) {
+/*    Function Takes ISBN, Makes AJAX Call To API, Pushes To Firebase    */
+function ISBN_to_firebase(ISBN, title = false) {
+
     if (ISBNArray.includes(ISBN)) {
         return;
     }
     ISBNArray.push(ISBN);
     var PATH = "https://www.googleapis.com/books/v1/volumes?q=isbn:";
+    if (title) {
+        PATH = "https://www.googleapis.com/books/v1/volumes?q=intitle:"
+    }
     var queryURL = PATH + ISBN;
     $.ajax({
         url: queryURL,
@@ -75,6 +75,7 @@ function ISBN_to_firebase(ISBN) {
             var publishedDateToLog = "'Date Not Listed'";
             var snippetToLog = "'Description Not Listed'";
             var titleToLog = "'Title Not Listed'";
+            var ISBNToLog = "ISBN Not Listed"
 
             if ("authors" in r.items[0].volumeInfo) {
                 authorToLog = r.items[0].volumeInfo.authors[0];
@@ -100,13 +101,17 @@ function ISBN_to_firebase(ISBN) {
                 snippetToLog = r.items[0].volumeInfo.description;
             }
 
+            if ("industryIdentifiers" in r.items[0].volumeInfo) {
+                ISBNToLog = r.items[0].volumeInfo.industryIdentifiers[0].identifier;
+            }
+
             database.ref(userName).push({
                 author: authorToLog,
                 title: titleToLog,
                 genre: genreToLog,
                 pages: pageCountToLog,
                 date: publishedDateToLog,
-                ISBN: ISBN,
+                ISBN: ISBNToLog,
                 snippet: snippetToLog
             });
 
@@ -157,4 +162,12 @@ var loopReadVideo = function () {
     });
 };
 
+$("#ISBN-entry-submit").click(function (event) {
+    ISBN_to_firebase($("#ISBN-entry").val());
+    $("#ISBN-entry").val("");
+})
 
+$("#title-entry-submit").click(function (event) {
+    ISBN_to_firebase($("#title-entry").val(), true);
+    $("#title-entry").val("");
+})
