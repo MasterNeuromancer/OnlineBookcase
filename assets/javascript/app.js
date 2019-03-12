@@ -41,7 +41,7 @@ $("#username-submit").click(function (event) {
 
         var row = $("<tr>");
         row.append($("<td>").text(book.title));
-        row.append($("<td>").text(book.autdor));
+        row.append($("<td>").text(book.author));
         row.append($("<td>").text(book.genre));
         row.append($("<td>").text(book.date));
         row.append($("<td>").text(book.pages));
