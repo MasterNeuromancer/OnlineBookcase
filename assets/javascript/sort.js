@@ -52,7 +52,6 @@ function printTable(array) {
 		var row = $("<tr>");
 
 		var popover = $("<button>");
-
 		popover.attr("data-toggle", "popover");
 		popover.attr("type", "button");
 		popover.attr("class", "btn btn-secondary");
@@ -61,6 +60,13 @@ function printTable(array) {
 		popover.attr("data-placement", "left");
 		popover.attr("data-container", "body");
 		popover.html("<i>").attr("class", "fas fa-book-open");
+		
+		var removeBTN = $("<button>");
+    		removeBTN.attr("type", "button");
+    		removeBTN.attr("class", "remove btn btn-secondary");
+    		removeBTN.attr("style", "color:red;");
+		removeBTN.attr("value", "array[i].key);
+    		removeBTN.html("<i>").attr("class", "far fa-trash-alt");
 
 		row.append($("<td>").text(array[i].title));
 		row.append($("<td>").text(array[i].author));
@@ -69,6 +75,7 @@ function printTable(array) {
 		row.append($("<td>").text(array[i].pages));
 		row.append($("<td>").text(array[i].ISBN));
 		row.append($("<td class='text-center'>").html(popover.popover()));
+		row.append($("<td class='text-center'>").html(removeBTN));
 		$("#table-data").append(row);
 
 	}
