@@ -57,10 +57,10 @@ function printTable(array){
         popover.attr("class", "btn btn-secondary");
         popover.attr("data-content", array[i].snippet);
         popover.attr("title", array[i].title);
-        popover.attr("data-placement", "bottom");
+        popover.attr("data-placement", "left");
         popover.attr("data-container", "body");
 		popover.html("<i>").attr("class", "fas fa-book-open");
-		
+
     	row.append($("<td>").text(array[i].title));
     	row.append($("<td>").text(array[i].author));
     	row.append($("<td>").text(array[i].genre));
