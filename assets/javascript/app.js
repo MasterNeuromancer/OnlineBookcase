@@ -34,6 +34,8 @@ database.ref(userName).on("child_added", function (snapshot) {
     popover.attr("class", "btn btn-secondary");
     popover.attr("data-content", book.snippet);
     popover.attr("title", book.title);
+    popover.attr("data-placement", "bottom");
+    popover.attr("data-container", "body");
     popover.html(book.title);
 
 
@@ -46,8 +48,13 @@ database.ref(userName).on("child_added", function (snapshot) {
     row.append($("<th>").text(book.ISBN));
     row.append($("<th>").html(popover));
     $("#table-data").append(row);
+    $(function () {
+        $('.popover').popover({
+        })
+      })
 });
     $("#username-modal").modal("hide");
+    
 
     
 })
@@ -88,7 +95,6 @@ var userName = "matt"
 // makes sure popover feature works.
 $(function () {
     $('.popover').popover({
-      container: 'table-data'
     })
   })
 
