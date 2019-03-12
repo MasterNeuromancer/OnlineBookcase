@@ -50,12 +50,24 @@ function printTable(array){
     $("#table-data").html("");
 	for(var i=0; i<array.length; ++i){
 		var row = $("<tr>");
+
+		var popover = $("<button>");
+        popover.attr("data-toggle", "popover");
+        popover.attr("type", "button");
+        popover.attr("class", "btn btn-secondary");
+        popover.attr("data-content", array[i].snippet);
+        popover.attr("title", array[i].title);
+        popover.attr("data-placement", "bottom");
+        popover.attr("data-container", "body");
+		popover.html("<i>").attr("class", "fas fa-book-open");
+		
     	row.append($("<td>").text(array[i].title));
     	row.append($("<td>").text(array[i].author));
     	row.append($("<td>").text(array[i].genre));
     	row.append($("<td>").text(array[i].date));
     	row.append($("<td>").text(array[i].pages));
-    	row.append($("<td>").text(array[i].ISBN));
+		row.append($("<td>").text(array[i].ISBN));
+		row.append($("<td class='text-center'>").html(popover.popover()));
     	$("#table-data").append(row);
 	}
 }

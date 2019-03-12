@@ -31,7 +31,7 @@ $("#username-submit").click(function (event) {
 		  userData.push(book);
 		  printTable(userData);
     
-        /*var popover = $("<button>");
+        var popover = $("<button>");
         popover.attr("data-toggle", "popover");
         popover.attr("type", "button");
         popover.attr("class", "btn btn-secondary");
@@ -41,7 +41,7 @@ $("#username-submit").click(function (event) {
         popover.attr("data-container", "body");
         popover.html("Plot Summary");
 
-        */
+        
     	
 	});
 
