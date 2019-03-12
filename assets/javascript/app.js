@@ -40,9 +40,11 @@ $("#username-submit").click(function (event) {
         popover.attr("data-placement", "bottom");
         popover.attr("data-container", "body");
         popover.html("Plot Summary");
+
         */
     	
 	});
+
     $("#username-modal").modal("hide");
 
 })
@@ -60,16 +62,49 @@ function ISBN_to_firebase(ISBN) {
         method: "GET"
     }).then(function (r) {
         console.log(r);
+        if ("items" in r) {
+            var authorToLog = "'No Author Listed'";
+            var genreToLog = "'No Genre Listed'";
+            var pageCountToLog = "'Pages Not Listed'";
+            var publishedDateToLog = "'Date Not Listed'";
+            var snippetToLog = "'Description Not Listed'";
+            var titleToLog = "'Title Not Listed'";
 
-        database.ref(userName).push({
-            author: r.items[0].volumeInfo.authors[0],
-            title: r.items[0].volumeInfo.title,
-            genre: r.items[0].volumeInfo.categories[0],
-            pages: r.items[0].volumeInfo.pageCount,
-            date: r.items[0].volumeInfo.publishedDate,
-            ISBN: ISBN,
-            snippet: r.items[0].volumeInfo.description
-        });
+            if ("authors" in r.items[0].volumeInfo) {
+                authorToLog = r.items[0].volumeInfo.authors[0];
+            }
+
+            if ("title" in r.items[0].volumeInfo) {
+                titleToLog = r.items[0].volumeInfo.title;
+            }
+
+            if ("categories" in r.items[0].volumeInfo) {
+                genreToLog = r.items[0].volumeInfo.categories[0];
+            }
+
+            if ("pageCount" in r.items[0].volumeInfo) {
+                pageCountToLog = r.items[0].volumeInfo.pageCount;
+            }
+
+            if ("publishedDate" in r.items[0].volumeInfo) {
+                publishedDateToLog = r.items[0].volumeInfo.publishedDate;
+            }
+
+            if ("description" in r.items[0].volumeInfo) {
+                snippetToLog = r.items[0].volumeInfo.description;
+            }
+
+            database.ref(userName).push({
+                author: authorToLog,
+                title: titleToLog,
+                genre: genreToLog,
+                pages: pageCountToLog,
+                date: publishedDateToLog,
+                ISBN: ISBN,
+                snippet: snippetToLog
+            });
+
+        }
     });
 }
 
