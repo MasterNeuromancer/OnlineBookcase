@@ -12,6 +12,7 @@ firebase.initializeApp(config);
 
 var database = firebase.database();
 var ISBNArray = [0];
+var userData = [];
 var userName = "default";
 $("#username-modal").modal("show");
 $("#username-submit").click(function (event) {
@@ -28,15 +29,17 @@ $("#username-submit").click(function (event) {
     	var book = snapshot.val();
     	ISBNArray.push(book.ISBN);
 
-    	var popover = $("<button>");
-    	popover.attr("data-toggle", "popover");
-    	popover.attr("type", "button");
-    	popover.attr("class", "btn btn-secondary");
-    	popover.attr("data-content", book.snippet);
-    	popover.attr("title", book.title);
-    	popover.html(book.title);
-
-
+		/*This is the user's data in the browser. This is the master list*/
+		userData.push({
+			author: book.title, 
+			title: book.author,
+			genre: book.genre,
+			date: book.data,
+			pages: book.pages,
+			isbn: book.ISBN
+		
+		});
+		/*This should be a seperate print function and it should read from the client data*/
     	var row = $("<tr>");
     	row.append($("<th>").text(book.title));
     	row.append($("<th>").text(book.author));
@@ -44,13 +47,12 @@ $("#username-submit").click(function (event) {
     	row.append($("<th>").text(book.date));
     	row.append($("<th>").text(book.pages));
     	row.append($("<th>").text(book.ISBN));
-    	row.append($("<th>").html(popover));
     	$("#table-data").append(row);
 	});
     $("#username-modal").modal("hide");
     
 })
-
+/* 		ISBN_to_firebase can be in a serperate file 	*/
 /*    Function Takes ISBN, Makes AJAX Call To API, Pushes To Firebase    */
 function ISBN_to_firebase(ISBN){
     if (ISBNArray.includes(ISBN)) {
@@ -85,8 +87,6 @@ function ISBN_to_firebase(ISBN){
 TestingISBN = "0451524934";
 ISBN_to_firebase(TestingISBN);
 
-/*    Update UI From DB    */
-var userName = "matt"
 
 
 
