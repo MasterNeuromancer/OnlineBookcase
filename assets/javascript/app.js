@@ -29,20 +29,7 @@ $("#username-submit").click(function (event) {
     	var book = snapshot.val();
     	ISBNArray.push(book.ISBN);
 		  userData.push(book);
-		  printTable(userData);
-    
-        /*var popover = $("<button>");
-        popover.attr("data-toggle", "popover");
-        popover.attr("type", "button");
-        popover.attr("class", "btn btn-secondary");
-        popover.attr("data-content", book.snippet);
-        popover.attr("title", book.title);
-        popover.attr("data-placement", "bottom");
-        popover.attr("data-container", "body");
-        popover.html("Plot Summary");
-
-        */
-    	
+		  printTable(userData);    	
 	});
 
     $("#username-modal").modal("hide");
