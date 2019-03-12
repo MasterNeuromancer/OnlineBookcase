@@ -23,14 +23,14 @@ $("#username-submit").click(function (event) {
     $("#username-display").text(userName);
     userName = userName.toLowerCase();
     $("#table-data").empty();
-    
-	database.ref(userName).on("child_added", function (snapshot) {
+
+    database.ref(userName).on("child_added", function (snapshot) {
         var book = snapshot.val();
-    	ISBNArray.push(book.ISBN);
+        ISBNArray.push(book.ISBN);
         userData.push(book);
-        printTable(userData);    	
-	});
-    
+        printTable(userData);
+    });
+
     $("#username-input").val("");
     $("#username-modal").modal("hide");
 
@@ -146,12 +146,12 @@ var loopReadVideo = function () {
     });
 };
 
-$("#ISBN-entry-submit").click(function(event) {
+$("#ISBN-entry-submit").click(function (event) {
     ISBN_to_firebase($("#ISBN-entry").val());
     $("#ISBN-entry").val("");
 })
 
-$("#title-entry-submit").click(function(event) {
+$("#title-entry-submit").click(function (event) {
     ISBN_to_firebase($("#title-entry").val(), true);
     $("#title-entry").val("");
 })
