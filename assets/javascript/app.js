@@ -18,21 +18,21 @@ $("#username-submit").click(function (event) {
     if ($("#username-input").val().trim() === "") {
         return;
     }
-    event.preventDefault();
     userName = $("#username-input").val().trim();
     $("#username-display").text(userName);
     userName = userName.toLowerCase();
     $("#table-data").empty();
 
 
-	database.ref(userName).on("child_added", function (snapshot) {
-    var book = snapshot.val();
-		var key = snapshot.key;
-		book.key = key;
-		userData.push(book);
-		ISBNArray.push(book.ISBN);
-		printTable(userData);
-	});
+    database.ref(userName).on("child_added", function (snapshot) {
+        var book = snapshot.val();
+        var key = snapshot.key;
+        book.key = key;
+        userData.push(book);
+        ISBNArray.push(book.ISBN);
+        printTable(userData);
+        console.log("Child added");
+    });
 
     $("#username-input").val("");
     $("#username-modal").modal("hide");
@@ -40,15 +40,15 @@ $("#username-submit").click(function (event) {
 });
 
 //Remove book by key
-function removeByKey(key){	
-   	database.ref(userName).child(key).remove();
-	for(var i=0; i<userData.length; ++i){
-		if(userData[i].key === key){
-			userData.splice(i, 1);
-			break;
-		}
-	}
-	printTable(userData);
+function removeByKey(key) {
+    database.ref(userName).child(key).remove();
+    for (var i = 0; i < userData.length; ++i) {
+        if (userData[i].key === key) {
+            userData.splice(i, 1);
+            break;
+        }
+    }
+    printTable(userData);
 }
 
 /*    Function Takes ISBN, Makes AJAX Call To API, Pushes To Firebase    */
@@ -170,4 +170,9 @@ $("#ISBN-entry-submit").click(function (event) {
 $("#title-entry-submit").click(function (event) {
     ISBN_to_firebase($("#title-entry").val(), true);
     $("#title-entry").val("");
+})
+
+$(document).on("click", ".remove", function (event) {
+    console.log("clicked")
+    removeByKey($(this).val());
 })

@@ -54,19 +54,19 @@ function printTable(array) {
 		var popover = $("<button>");
 		popover.attr("data-toggle", "popover");
 		popover.attr("type", "button");
-		popover.attr("class", "btn btn-secondary");
 		popover.attr("data-content", array[i].snippet);
 		popover.attr("title", array[i].title);
 		popover.attr("data-placement", "left");
 		popover.attr("data-container", "body");
-		popover.html("<i>").attr("class", "fas fa-book-open");
-		
+		popover.html("<i class='fas fa-book-open'>");
+
 		var removeBTN = $("<button>");
-    		removeBTN.attr("type", "button");
-    		removeBTN.attr("class", "remove btn btn-secondary");
-    		removeBTN.attr("style", "color:red;");
-		removeBTN.attr("value", "array[i].key);
-    		removeBTN.html("<i>").attr("class", "far fa-trash-alt");
+		removeBTN.attr("type", "button");
+		removeBTN.addClass("remove");
+		removeBTN.attr("style", "color:red;");
+		removeBTN.attr("value", array[i].key);
+		removeBTN.html("<i class='far fa-trash-alt'>")
+		console.log("Print Table");
 
 		row.append($("<td>").text(array[i].title));
 		row.append($("<td>").text(array[i].author));
