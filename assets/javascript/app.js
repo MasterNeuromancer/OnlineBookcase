@@ -24,6 +24,7 @@ $("#username-submit").click(function (event) {
     userName.toLowerCase();
     console.log(userName);
     $("#table-data").empty();
+<<<<<<< HEAD
 database.ref(userName).on("child_added", function (snapshot) {
     var book = snapshot.val();
     ISBNArray.push(book.ISBN);
@@ -47,9 +48,37 @@ database.ref(userName).on("child_added", function (snapshot) {
     row.append($("<th>").html(popover.popover()));
     $("#table-data").append(row);
 });
+=======
+    database.ref(userName).on("child_added", function (snapshot) {
+        var book = snapshot.val();
+        ISBNArray.push(book.ISBN);
+
+        var popover = $("<button>");
+        popover.attr("data-toggle", "popover");
+        popover.attr("type", "button");
+        popover.attr("class", "btn btn-secondary");
+        popover.attr("data-content", book.snippet);
+        popover.attr("title", book.title);
+        popover.attr("data-placement", "bottom");
+        popover.attr("data-container", "body");
+        popover.html("Plot Summary");
+
+
+        var row = $("<tr>");
+        row.append($("<td>").text(book.title));
+        row.append($("<td>").text(book.autdor));
+        row.append($("<td>").text(book.genre));
+        row.append($("<td>").text(book.date));
+        row.append($("<td>").text(book.pages));
+        row.append($("<td>").text(book.ISBN));
+        row.append($("<td>").html(popover.popover()));
+        $("#table-data").append(row);
+    });
+>>>>>>> aa438c2951f2cd73d91ca8fec5a38547da648ed7
     $("#username-modal").modal("hide");
 
-    
+
+
 })
 
 
@@ -67,12 +96,15 @@ function ISBN_to_firebase(ISBN) {
         method: "GET"
     }).then(function (r) {
         console.log(r);
+<<<<<<< HEAD
         console.log(r.items[0].volumeInfo.authors[0]);
         console.log(r.items[0].volumeInfo.title);
         console.log(r.items[0].volumeInfo.categories[0]);
         console.log(r.items[0].volumeInfo.pageCount);
         console.log(r.items[0].volumeInfo.publishedDate);
         console.log(r.items[0].volumeInfo.description);
+=======
+>>>>>>> aa438c2951f2cd73d91ca8fec5a38547da648ed7
 
         database.ref(userName).push({
             author: r.items[0].volumeInfo.authors[0],
@@ -85,6 +117,10 @@ function ISBN_to_firebase(ISBN) {
         });
     });
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> aa438c2951f2cd73d91ca8fec5a38547da648ed7
 
 //dynamsoft setup stuff. Don't touch!
 dynamsoft = self.dynamsoft || {};
