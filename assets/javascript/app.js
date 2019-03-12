@@ -12,6 +12,45 @@ firebase.initializeApp(config);
 
 var database = firebase.database();
 var ISBNArray = [0];
+var userName = "default";
+$("#username-modal").modal("show");
+$("#username-submit").click(function (event) {
+    if ($("#username-input").val().trim() === "") {
+        return;
+    }
+    event.preventDefault();
+    userName = $("#username-input").val().trim();
+    $("#username-display").text(userName);
+    userName.toLowerCase();
+    console.log(userName);
+    $("#table-data").empty();
+database.ref(userName).on("child_added", function (snapshot) {
+    var book = snapshot.val();
+    ISBNArray.push(book.ISBN);
+
+    var popover = $("<button>");
+    popover.attr("data-toggle", "popover");
+    popover.attr("type", "button");
+    popover.attr("class", "btn btn-secondary");
+    popover.attr("data-content", book.snippet);
+    popover.attr("title", book.title);
+    popover.html(book.title);
+
+
+    var row = $("<tr>");
+    row.append($("<th>").text(book.title));
+    row.append($("<th>").text(book.author));
+    row.append($("<th>").text(book.genre));
+    row.append($("<th>").text(book.date));
+    row.append($("<th>").text(book.pages));
+    row.append($("<th>").text(book.ISBN));
+    row.append($("<th>").html(popover.popover()));
+    $("#table-data").append(row);
+});
+    $("#username-modal").modal("hide");
+
+    
+})
 
 
 
@@ -46,34 +85,6 @@ function ISBN_to_firebase(ISBN) {
         });
     });
 }
-TestingISBN = "0451524934";
-ISBN_to_firebase(TestingISBN);
-
-/*    Update UI From DB    */
-var userName = "matt"
-database.ref(userName).on("child_added", function (snapshot) {
-    var book = snapshot.val();
-    ISBNArray.push(book.ISBN);
-
-    var popover = $("<button>");
-    popover.attr("data-toggle", "popover");
-    popover.attr("type", "button");
-    popover.attr("class", "btn btn-secondary");
-    popover.attr("data-content", book.snippet);
-    popover.attr("title", book.title);
-    popover.html(book.title);
-
-
-    var row = $("<tr>");
-    row.append($("<td>").text(book.title));
-    row.append($("<td>").text(book.author));
-    row.append($("<td>").text(book.genre));
-    row.append($("<td>").text(book.date));
-    row.append($("<td>").text(book.pages));
-    row.append($("<td>").text(book.ISBN));
-    row.append($("<td>").html(popover.popover()));
-    $("#table-data").append(row);
-});
 
 //dynamsoft setup stuff. Don't touch!
 dynamsoft = self.dynamsoft || {};
@@ -84,7 +95,8 @@ var isLooping = 0;
 
 //When the scan barcode button is clicked, this brings up the modal containing the video and asks for webcam persmission and starts barcode scanning
 var videoElement = $("#video")[0];
-$("#scan-barcode").click(function () {
+$("#scan-barcode").on("click", function () {
+    console.log("Start Video");
     navigator.mediaDevices.getUserMedia({ video: { width: { ideal: 1280 }, height: { ideal: 720 }, facingMode: { ideal: 'environment' } } }).then(function (stream) {
         videoElement.srcObject = stream;
         videoElement.play();
@@ -115,4 +127,5 @@ var loopReadVideo = function () {
         reader.deleteInstance();
     });
 };
+
 
