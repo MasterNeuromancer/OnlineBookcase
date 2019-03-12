@@ -27,29 +27,35 @@ $("#username-submit").click(function (event) {
 
 	database.ref(userName).on("child_added", function (snapshot) {
     	var book = snapshot.val();
-    	ISBNArray.push(book.ISBN);
-		  userData.push(book);
-		  printTable(userData);
-    
-        /*var popover = $("<button>");
-        popover.attr("data-toggle", "popover");
-        popover.attr("type", "button");
-        popover.attr("class", "btn btn-secondary");
-        popover.attr("data-content", book.snippet);
-        popover.attr("title", book.title);
-        popover.attr("data-placement", "bottom");
-        popover.attr("data-container", "body");
-        popover.html("Plot Summary");
-
-        */
-    	
+		var key = snapshot.key;
+		book.key = key;
+		userData.push(book);
+		ISBNArray.push(book.ISBN);
+		printTable(userData);
 	});
 
+	//this doesn't do anything, this listener code can be remobed.
+	database.ref(userName).on("child_removed", function (snapshot){
+		console.log("removed a child!");
+	});
+   
     $("#username-modal").modal("hide");
 
-})
-/* 		ISBN_to_firebase can be in a serperate file 	*/
-/*    Function Takes ISBN, Makes AJAX Call To API, Pushes To Firebase    */
+});
+
+//Remove book by key
+function removeByKey(key){	
+   	database.ref(userName).child(key).remove();
+	for(var i=0; i<userData.length; ++i){
+		if(userData[i].key === key){
+			userData.splice(i, 1);
+			break;
+		}
+	}
+	printTable(userData);
+}
+
+// Function Takes ISBN, Makes AJAX Call To API, Pushes To Firebase   
 function ISBN_to_firebase(ISBN) {
     if (ISBNArray.includes(ISBN)) {
         return;
