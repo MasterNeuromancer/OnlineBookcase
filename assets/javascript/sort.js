@@ -52,6 +52,7 @@ function printTable(array) {
 		var row = $("<tr>");
 
 		var popover = $("<button>");
+
 		popover.attr("data-toggle", "popover");
 		popover.attr("type", "button");
 		popover.attr("class", "btn btn-secondary");
@@ -69,5 +70,6 @@ function printTable(array) {
 		row.append($("<td>").text(array[i].ISBN));
 		row.append($("<td class='text-center'>").html(popover.popover()));
 		$("#table-data").append(row);
+
 	}
 }
