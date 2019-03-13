@@ -13,7 +13,7 @@
 </head>
 
 <body>
-  <nav class="navbar navbar-expand navbar-dark bg-dark">
+  <nav id="navbar" class="navbar navbar-expand">
     <div class="container">
       <a id="username-display" data-toggle="modal" data-target="#username-modal" class="navbar-brand"
         href="#">USERNAME</a>
@@ -37,14 +37,14 @@
     </div>
   </nav>
 
-  <div class="container">
+  <div class="container" id="table-container">
     <table class="table table-sm">
       <thead>
         <tr>
           <th id="title-header" class="sortable" scope=“col”>Title</th>
           <th id="author-header" class="sortable" scope=“col”>Author</th>
           <th id="genre-header" class="sortable" scope=“col”>Genre</th>
-          <th id="date-header" class="sortable" scope=“col”>Date Published</th>
+          <th id="date-header" class="sortable" scope=“col”>Date</th>
           <th id="pages-header" class="sortable" scope=“col”>Pages</th>
           <th id="isbn-header" class="sortable" scope=“col”>ISBN</th>
           <th id="snippet-header" scope=“col”>Snippet</th>
