@@ -95,7 +95,7 @@ function ISBN_to_firebase(ISBN, title = false) {
             }
 
             if ("publishedDate" in r.items[0].volumeInfo) {
-                publishedDateToLog = r.items[0].volumeInfo.publishedDate.slice(0,4);
+                publishedDateToLog = r.items[0].volumeInfo.publishedDate.slice(0, 4);
             }
 
             if ("description" in r.items[0].volumeInfo) {
@@ -174,3 +174,15 @@ $("#title-entry-submit").click(function (event) {
 $(document).on("click", ".remove", function (event) {
     removeByKey($(this).val());
 })
+
+$("#delete-entry-button").click(function (event) {
+    if (deleteShown) {
+        $(".remove").hide();
+        $("#delete-header").css("opacity", ".2")
+        deleteShown = false
+    } else {
+        $("#delete-header").css("opacity", "1")
+        $(".remove").show();
+        deleteShown = true;
+    }
+}) 

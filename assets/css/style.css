@@ -1,1 +1,5 @@
-th {cursor: pointer} 
+.sortable {cursor: pointer} 
+
+#username-display {
+    padding-left: 15px;
+}

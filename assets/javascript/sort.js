@@ -3,26 +3,26 @@ console.log("sort.js linked");
 
 
 
-
+var deleteShown = false;
 var sortFlag = false;
 var reverseFlag = false;
-function setupHeaderHandlers(ID, prop){
-	$(ID).click(function() {
-		if(sortFlag !== prop){
+function setupHeaderHandlers(ID, prop) {
+	$(ID).click(function () {
+		if (sortFlag !== prop) {
 			sort(userData, prop);
 			sortFlag = prop;
 			reverseFlag = false;
 			printTable(userData);
-		}else{
-			if(reverseFlag){
+		} else {
+			if (reverseFlag) {
 				printTable(userData); //it's already in reverse, so reverse it again
 				reverseFlag = false;
-			}else{
+			} else {
 				printTable(userData, true); //reverse printing with optional arg
 				reverseFlag = true;
 			}
 		}
-		console.log("sort by"+prop+"clicked");
+		console.log("sort by" + prop + "clicked");
 	});
 }
 
@@ -35,7 +35,6 @@ setupHeaderHandlers("#genre-header", "genre");
 setupHeaderHandlers("#date-header", "date");
 setupHeaderHandlers("#pages-header", "pages");
 setupHeaderHandlers("#isbn-header", "ISBN");
-setupHeaderHandlers("#snippet-header", "snippet");
 
 
 function sort(array, prop) {
@@ -82,13 +81,22 @@ function printTable(array, reverse = false) {
 		row.append($("<td>").text(array[i].ISBN));
 		row.append($("<td class='text-center'>").html(popover.popover()));
 		row.append($("<td class='text-center'>").html(removeBTN));
-		
-		if(!reverse){
+
+
+
+		if (!reverse) {
 			$("#table-data").append(row);
-		}else if(reverse){
+		} else if (reverse) {
 			$("#table-data").prepend(row);
-			
+
 		}
 	}
-		console.log("printTable called");
+	if (!deleteShown) {
+		$(".remove").hide();
+		$("#delete-header").css("opacity", ".2")
+	} else {
+		$("#delete-header").css("opacity", "1")
+		$(".remove").show();
+	}
+	console.log("printTable called");
 }
