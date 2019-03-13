@@ -1,34 +1,42 @@
 console.log("sort.js linked");
 /*	userData is pushed the books from the DB on when page loads, when value are added to DB from ISBN_to_firebase	*/
 
-$("#title-header").click(function () {
-	sort(userData, "title");
-	printTable(userData);
-});
-$("#author-header").click(function () {
-	sort(userData, "author");
-	printTable(userData);
-});
-$("#genre-header").click(function () {
-	sort(userData, "genre");
-	printTable(userData);
-});
-$("#date-header").click(function () {
-	sort(userData, "date");
-	printTable(userData);
-});
-$("#pages-header").click(function () {
-	sort(userData, "pages");
-	printTable(userData);
-});
-$("#isbn-header").click(function () {
-	sort(userData, "ISBN");
-	printTable(userData);
-});
-$("#snippet-header").click(function () {
-	sort(userData, "snippet");
-	printTable(userData);
-});
+
+
+
+var sortFlag = false;
+var reverseFlag = false;
+function setupHeaderHandlers(ID, prop){
+	$(ID).click(function() {
+		if(sortFlag !== prop){
+			sort(userData, prop);
+			sortFlag = prop;
+			reverseFlag = false;
+			printTable(userData);
+		}else{
+			if(reverseFlag){
+				printTable(userData); //it's already in reverse, so reverse it again
+				reverseFlag = false;
+			}else{
+				printTable(userData, true); //reverse printing with optional arg
+				reverseFlag = true;
+			}
+		}
+		console.log("sort by"+prop+"clicked");
+	});
+}
+
+
+
+
+setupHeaderHandlers("#title-header", "title");
+setupHeaderHandlers("#author-header", "author");
+setupHeaderHandlers("#genre-header", "genre");
+setupHeaderHandlers("#date-header", "date");
+setupHeaderHandlers("#pages-header", "pages");
+setupHeaderHandlers("#isbn-header", "ISBN");
+setupHeaderHandlers("#snippet-header", "snippet");
+
 
 function sort(array, prop) {
 	for (var i = 0; i < array.length - 1; i++) {
@@ -46,7 +54,7 @@ function sort(array, prop) {
 }
 
 
-function printTable(array) {
+function printTable(array, reverse = false) {
 	$("#table-data").html("");
 	for (var i = 0; i < array.length; ++i) {
 		var row = $("<tr>");
@@ -66,8 +74,6 @@ function printTable(array) {
 		removeBTN.attr("style", "color:red;");
 		removeBTN.attr("value", array[i].key);
 		removeBTN.html("<i class='far fa-trash-alt'>")
-		console.log("Print Table");
-
 		row.append($("<td>").text(array[i].title));
 		row.append($("<td>").text(array[i].author));
 		row.append($("<td>").text(array[i].genre));
@@ -76,7 +82,13 @@ function printTable(array) {
 		row.append($("<td>").text(array[i].ISBN));
 		row.append($("<td class='text-center'>").html(popover.popover()));
 		row.append($("<td class='text-center'>").html(removeBTN));
-		$("#table-data").append(row);
-
+		
+		if(!reverse){
+			$("#table-data").append(row);
+		}else if(reverse){
+			$("#table-data").prepend(row);
+			
+		}
 	}
+		console.log("printTable called");
 }
