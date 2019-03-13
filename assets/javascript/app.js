@@ -23,7 +23,6 @@ $("#username-submit").click(function (event) {
     userName = userName.toLowerCase();
     $("#table-data").empty();
 
-
     database.ref(userName).on("child_added", function (snapshot) {
         var book = snapshot.val();
         var key = snapshot.key;
@@ -31,7 +30,6 @@ $("#username-submit").click(function (event) {
         userData.push(book);
         ISBNArray.push(book.ISBN);
         printTable(userData);
-        console.log("Child added");
     });
 
     $("#username-input").val("");
@@ -54,10 +52,7 @@ function removeByKey(key) {
 /*    Function Takes ISBN, Makes AJAX Call To API, Pushes To Firebase    */
 function ISBN_to_firebase(ISBN, title = false) {
 
-    if (ISBNArray.includes(ISBN)) {
-        return;
-    }
-    ISBNArray.push(ISBN);
+
     var PATH = "https://www.googleapis.com/books/v1/volumes?q=isbn:";
     if (title) {
         PATH = "https://www.googleapis.com/books/v1/volumes?q=intitle:"
@@ -68,14 +63,20 @@ function ISBN_to_firebase(ISBN, title = false) {
         method: "GET"
     }).then(function (r) {
         console.log(r);
+        if (ISBNArray.includes(r.items[0].volumeInfo.industryIdentifiers[0].identifier)) {
+            return;
+        }
+        //pull the isbn out of the response and add it to ISBNArray. This is to catch when we add books by title
+        ISBNArray.push(r.items[0].volumeInfo.industryIdentifiers[0].identifier);
+        ISBNArray.push(ISBN);
         if ("items" in r) {
-            var authorToLog = "'No Author Listed'";
-            var genreToLog = "'No Genre Listed'";
-            var pageCountToLog = "'Pages Not Listed'";
-            var publishedDateToLog = "'Date Not Listed'";
-            var snippetToLog = "'Description Not Listed'";
-            var titleToLog = "'Title Not Listed'";
-            var ISBNToLog = "ISBN Not Listed"
+            var authorToLog = "";
+            var genreToLog = "";
+            var pageCountToLog = "";
+            var publishedDateToLog = "";
+            var snippetToLog = "";
+            var titleToLog = "";
+            var ISBNToLog = ""
 
             if ("authors" in r.items[0].volumeInfo) {
                 authorToLog = r.items[0].volumeInfo.authors[0];
@@ -94,7 +95,7 @@ function ISBN_to_firebase(ISBN, title = false) {
             }
 
             if ("publishedDate" in r.items[0].volumeInfo) {
-                publishedDateToLog = r.items[0].volumeInfo.publishedDate;
+                publishedDateToLog = r.items[0].volumeInfo.publishedDate.slice(0,4);
             }
 
             if ("description" in r.items[0].volumeInfo) {
@@ -130,7 +131,6 @@ var isLooping = 0;
 //When the scan barcode button is clicked, this brings up the modal containing the video and asks for webcam persmission and starts barcode scanning
 var videoElement = $("#video")[0];
 $("#scan-barcode").on("click", function () {
-    console.log("Start Video");
     navigator.mediaDevices.getUserMedia({ video: { width: { ideal: 1280 }, height: { ideal: 720 }, facingMode: { ideal: 'environment' } } }).then(function (stream) {
         videoElement.srcObject = stream;
         videoElement.play();
@@ -140,7 +140,6 @@ $("#scan-barcode").on("click", function () {
 
 //this runs when the modal is closed and stops the video and the barcode scanning
 $('#exampleModal').on('hidden.bs.modal', function (e) {
-    console.log("CLOSED!")
     var stream = videoElement.srcObject;
     var videoTrack = stream.getTracks();
     videoTrack[0].stop();
@@ -173,6 +172,5 @@ $("#title-entry-submit").click(function (event) {
 })
 
 $(document).on("click", ".remove", function (event) {
-    console.log("clicked")
     removeByKey($(this).val());
 })
