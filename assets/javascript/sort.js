@@ -37,38 +37,6 @@ setupHeaderHandlers("#pages-header", "pages");
 setupHeaderHandlers("#isbn-header", "ISBN");
 setupHeaderHandlers("#snippet-header", "snippet");
 
-/////////////abstract this into function
-/*
-$("#title-header").click(function () {
-	sort(userData, "title");
-	console.log("sort by title clicked!");
-	printTable(userData);
-});
-$("#author-header").click(function () {
-	sort(userData, "author");
-	printTable(userData);
-});
-$("#genre-header").click(function () {
-	sort(userData, "genre");
-	printTable(userData);
-});
-$("#date-header").click(function () {
-	sort(userData, "date");
-	printTable(userData);
-});
-$("#pages-header").click(function () {
-	sort(userData, "pages");
-	printTable(userData);
-});
-$("#isbn-header").click(function () {
-	sort(userData, "ISBN");
-	printTable(userData);
-});
-$("#snippet-header").click(function () {
-	sort(userData, "snippet");
-	printTable(userData);
-});
-*/
 
 function sort(array, prop) {
 	for (var i = 0; i < array.length - 1; i++) {
@@ -106,7 +74,6 @@ function printTable(array, reverse = false) {
 		removeBTN.attr("style", "color:red;");
 		removeBTN.attr("value", array[i].key);
 		removeBTN.html("<i class='far fa-trash-alt'>")
-//		console.log("Print Table");
 		row.append($("<td>").text(array[i].title));
 		row.append($("<td>").text(array[i].author));
 		row.append($("<td>").text(array[i].genre));
