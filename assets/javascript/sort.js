@@ -26,16 +26,12 @@ function setupHeaderHandlers(ID, prop) {
 	});
 }
 
-
-
-
 setupHeaderHandlers("#title-header", "title");
 setupHeaderHandlers("#author-header", "author");
 setupHeaderHandlers("#genre-header", "genre");
 setupHeaderHandlers("#date-header", "date");
 setupHeaderHandlers("#pages-header", "pages");
 setupHeaderHandlers("#isbn-header", "ISBN");
-
 
 function sort(array, prop) {
 	for (var i = 0; i < array.length - 1; i++) {
@@ -51,7 +47,6 @@ function sort(array, prop) {
 		array[b] = t;
 	}
 }
-
 
 function printTable(array, reverse = false) {
 	$("#table-data").html("");
