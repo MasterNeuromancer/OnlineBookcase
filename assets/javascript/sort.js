@@ -11,6 +11,7 @@ function setupHeaderHandlers(ID, prop){
 		if(sortFlag !== prop){
 			sort(userData, prop);
 			sortFlag = prop;
+			reverseFlag = false;
 			printTable(userData);
 		}else{
 			if(reverseFlag){
